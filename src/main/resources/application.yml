@@ -9,6 +9,17 @@ spring:
     url: jdbc:mysql://localhost:3307/wallet?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
     password: root
+  task:
+    scheduling:
+      thread-name-prefix: my_executor
+    execution:
+      pool:
+        max-size: 100
+        core-size: 20
+        keep-alive: "60s"
+        queue-capacity: 60
+
+
 
 mybatis-plus:
   type-aliases-package: com.wz.wallet.entity
@@ -21,6 +32,10 @@ mybatis-plus:
 logging:
   level:
     com.wz.com.wz.wallet: debug
+
+
+
+
 
 
 

@@ -3,10 +3,18 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wz.wallet.mapper.WalletMapper">
-    <cache>
-    </cache>
+<!--    <cache>-->
+<!--    </cache>-->
 
-    <select id="selectById" resultType="Long">
+    <select id="queryBalance" resultType="java.math.BigDecimal">
         select balance from tb_wallet where user_id = #{userId}
     </select>
+
+    <update id="updateBalanceByConsume">
+        update tb_wallet set balance = balance - #{consume} where user_id = #{userId}
+    </update>
+
+    <update id="updateBalanceByRefund">
+        update tb_wallet set balance = balance + #{refund} where user_id = #{userId}
+    </update>
 </mapper>

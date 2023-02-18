@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/vue.min.js"></script>
+    <script src="../js/axios.min.js"></script>
+</head>
+<body>
+<div id="app">
+    <div>
+        当前余额:<h3>{{wallet.balance}}</h3>
+        <button @click="consume(user.userId,100)">消费100元</button>
+        <button @click="refund(user.userId,20)">退款20元</button>
+        <br>
+        <input type="number" placeholder="请输入金额" ref="into" v-model:value="number">
+        <button @click="consume(user.userId,number)">消费</button>
+        <button @click="refund(user.userId,number)">退款</button>
+    </div>
+</div>
+<script>
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                wallet: {
+                    balance: '',
+                },
+                user: {
+                    userId: 1,
+                },
+                active: {
+                    consume: 1.250,
+                    refund: 20.560
+                },
+                number: ''
+            }
+        },
+        methods: {
+            // 查询余额
+            balance() {
+                window.axios({
+                    'url': `/wallet/balance/${this.user.userId}`,
+                    'method': 'get',
+                }).then(res => {
+                    this.wallet.balance = res.data["data"]
+                })
+            },
+            // 消费100元
+            consume(userId, consume) {
+                window.axios({
+                    'url': `/wallet/consume`,
+                    'method': 'get',
+                    params: {
+                        userId: userId,
+                        consume: consume
+                    },
+                }).then(res => {
+                    if (res.data["code"] === 1) {
+                        this.balance()
+                    } else {
+                        alert(res.data["msg"])
+
+                    }
+
+                })
+            },
+            // 退款20元
+            refund(userId, refund) {
+                window.axios({
+                    'url': `/wallet/refund`,
+                    'method': 'post',
+                    data: `userId=${userId}&refund=${refund}`,
+                }).then(res => {
+                    if (res.data["code"] === 1) {
+                        this.balance()
+                    } else {
+                        alert(res.data["msg"])
+
+                    }
+                })
+            }
+
+        },
+        mounted() {
+            this.balance()
+        }
+    })
+</script>
+</body>
+
+
+</html>

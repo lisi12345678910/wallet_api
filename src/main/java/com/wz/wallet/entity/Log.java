@@ -7,8 +7,9 @@ import java.util.Date;
 @Data
 public class Log {
     private Long id;
+    private Long userId;
 
     private String content;
 
-    private Date createTime;
+    private Date timeStamp;
 }

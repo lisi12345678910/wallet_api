@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
 * (tb_log)表控制层
 *
-* @author
+* @author wz
 */
 @RestController
 @RequestMapping("/log")

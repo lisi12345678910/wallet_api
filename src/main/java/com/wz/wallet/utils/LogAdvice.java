@@ -1,14 +1,12 @@
 package com.wz.wallet.utils;
 
 import com.wz.wallet.entity.Log;
-import com.wz.wallet.entity.User;
 import com.wz.wallet.service.LogService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -17,16 +15,20 @@ import java.math.BigDecimal;
 @Aspect
 public class LogAdvice {
 
-    @Autowired
-    private LogService logService;
+    private final LogService logService;
+
+
+    public LogAdvice(LogService logService) {
+        this.logService = logService;
+    }
 
     //切入点
     @Pointcut("@annotation(com.wz.wallet.utils.LogAnno)")
-    public void logPointCut(){
+    public void logPointCut() {
     }
 
 
-    //配置huanraotzh
+    //配置环绕通知
     @Around("logPointCut()")
     public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
         Object result = joinPoint.proceed();
@@ -40,7 +42,7 @@ public class LogAdvice {
         LogAnno annotation = methodSignature.getMethod().getAnnotation(LogAnno.class);
         String doString = annotation.value();//获取操作内容
         BigDecimal number = (BigDecimal) args[1];//获取操作金额
-        String content = doString+number+"元";//拼接成日志内容
+        String content = doString + number + "元";//拼接成日志内容
         log.setContent(content);
         //存入数据库
         logService.saveLog(log);

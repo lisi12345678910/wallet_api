@@ -1,24 +1,21 @@
 package com.wz.wallet.service.impl;
 
 import com.wz.wallet.entity.CustomException;
-import com.wz.wallet.entity.Result;
-import com.wz.wallet.mapper.LogMapper;
 import com.wz.wallet.mapper.WalletMapper;
 import com.wz.wallet.service.WalletService;
 import com.wz.wallet.utils.LogAnno;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
 
 @Service
 public class WalletServiceImpl implements WalletService{
 
-    @Autowired
-    private WalletMapper walletMapper;
+    private final WalletMapper walletMapper;
 
-
+    public WalletServiceImpl(WalletMapper walletMapper) {
+        this.walletMapper = walletMapper;
+    }
 
     @Override
     public BigDecimal balance(Long userId) {

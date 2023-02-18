@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.sql.SQLIntegrityConstraintViolationException;
+
 
 //定义全局异常处理
 @ControllerAdvice(annotations = {RestController.class, Controller.class})

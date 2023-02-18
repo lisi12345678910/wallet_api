@@ -2,7 +2,6 @@ package com.wz.wallet.controller;
 
 import com.wz.wallet.entity.Result;
 import com.wz.wallet.service.WalletService;
-import com.wz.wallet.utils.LogAnno;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,20 +10,22 @@ import java.math.BigDecimal;
 /**
 * (tb_wallet)表控制层
 *
-* @author
+* @author wz
 */
 @RestController
 @RequestMapping("/wallet")
 public class WalletController {
 
-    @Autowired
-    private WalletService walletService;
+    private final WalletService walletService;
+
+    public WalletController(WalletService walletService) {
+        this.walletService = walletService;
+    }
 
     /**
      * 获取钱包余额
-     *
-     * @param
-     * @return
+     * @param userId 用户id
+     * @return Result<String>
      */
     @GetMapping("/balance/{userId}")
     @ResponseBody
@@ -36,8 +37,9 @@ public class WalletController {
 
     /**
      * 消费接口
-     * @param
-     * @return
+     * @param userId 用户id
+     * @param consume 消费金额
+     * @return Result<String>
      */
 
     @GetMapping("/consume")
@@ -48,8 +50,9 @@ public class WalletController {
 
     /**
      * 退款接口
-     * @param
-     * @return
+     * @param userId 用户id
+     * @param refund 退费金额
+     * @return Result<String>
      */
 
     @PostMapping("/refund")
